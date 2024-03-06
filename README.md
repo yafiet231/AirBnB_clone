@@ -29,11 +29,10 @@ cd AirBnB_clone
 - Run the console.py file with: "./console.py" or "python console.py"
 - And finallyType "help" in the console for documentation.
 
-### Interactive Mode
+Interactive Mode
 ```bash
 $ ./console.py
 (hbnb) help
-
 Documented commands (type help <topic>):
 ========================================
 EOF  help  quit
@@ -65,11 +64,13 @@ EOF  help  quit
 (hbnb)
 $
 ```
+
 #### How to Use Command Interpreter
+```bash
 ---
 | Commands  |        Usage                                  | Result                                        |
 | --------- | --------------------------------------------- | ------------------------------------------    |
-| `help`    | `help`                                        | displays list of all commands available       |
+| `help`    |                                               | displays list of all commands available       |
 | `create`  | `create <class>`                              | creates new instance                          |
 | `update`  | `User.update('7', {'name' : 'Hello'})`        | updates attribute of an instance              |
 | `destroy` | `User.destroy('7')`                           | destroys specified instance                   |
@@ -77,6 +78,7 @@ $
 | `all`     | `User.all()`                                  | display all instance  in class                |
 | `count`   | `User.count()`                                | returns count of instance  in specified class |
 | `quit`    | `quit`                                        | exits                                         |
+```
 
 ### Testing
 Within the project, we have incorporated unit tests to verify the accuracy of the implemented functionality. To execute these tests, follow the instructions below:
