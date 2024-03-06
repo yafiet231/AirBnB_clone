@@ -18,12 +18,9 @@ Command interpreter is a shell like with limited to a specific use-case. In this
 
 #### How to Start the Command Interpreter
 To start the command interpreter, follow these steps:
-- Clone the project repository to your local machine.
+- Clone the project repository to your local machine and Navigate to the directory.
  ```bash
 git clone git@github.com:Mahari9/AirBnB_clone.git
-```
-- Navigate to the directory containing the project files.
-  ```bash
 cd AirBnB_clone
 ```
 - Run the console.py file with: "./console.py" or "python console.py"
@@ -66,7 +63,6 @@ $
 ```
 
 #### How to Use Command Interpreter
-```bash
 ---
 | Commands  |        Usage                                  | Result                                        |
 | --------- | --------------------------------------------- | ------------------------------------------    |
@@ -78,7 +74,6 @@ $
 | `all`     | `User.all()`                                  | display all instance  in class                |
 | `count`   | `User.count()`                                | returns count of instance  in specified class |
 | `quit`    | `quit`                                        | exits                                         |
-```
 
 ### Testing
 Within the project, we have incorporated unit tests to verify the accuracy of the implemented functionality. To execute these tests, follow the instructions below:
