@@ -1,10 +1,10 @@
 # AirBnB clone - The console
 
-#### Description
+## Description
 > This team project mainly aims to build Console part of a clone of [AirBnB](https://www.airbnb.com/). 
 > This repository contains a console (command interpreter) which ables to manage AirBnB clone objects.
 > The repository also contains parent or base class, child classes inherited from the basemodel and tests.
-#### Command Interpreter
+## Command Interpreter
 Command interpreter is a shell like with limited to a specific use-case. In this project the Command interpreter will help to manage the objects of our project, Like:
 * To create a new object
 * To retrive an object from a file, database, etc..
@@ -12,11 +12,11 @@ Command interpreter is a shell like with limited to a specific use-case. In this
 * To do operations on objects (count, compute stats, etc…)
 * To destroy an object
 
-#### Environment
+## Environment
 * Language: Python3
 * OS: Ubuntu 20.04 LTS
 
-#### How to Start the Command Interpreter
+### How to Start the Command Interpreter
 To start the command interpreter, follow these steps:
 - Clone the project repository to your local machine and Navigate to the directory.
  ```bash
@@ -24,7 +24,7 @@ git clone git@github.com:Mahari9/AirBnB_clone.git
 cd AirBnB_clone
 ```
 - Run the console.py file with: "./console.py" or "python console.py"
-- And finallyType "help" in the console for documentation.
+- And finally type "help" in the console for documentation.
 
 Interactive Mode
 ```bash
@@ -62,7 +62,7 @@ EOF  help  quit
 $
 ```
 
-#### How to Use Command Interpreter
+### How to Use Command Interpreter
 ---
 | Commands  |        Usage                                  | Result                                        |
 | --------- | --------------------------------------------- | ------------------------------------------    |
@@ -75,7 +75,7 @@ $
 | `count`   | `User.count()`                                | returns count of instance  in specified class |
 | `quit`    | `quit`                                        | exits                                         |
 
-### Testing
+## Testing
 Within the project, we have incorporated unit tests to verify the accuracy of the implemented functionality. To execute these tests, follow the instructions below:
 - "python3 -m unittest discover tests" (interactive mode)
 - "echo 'python3 -m unittest discover tests' | bash" (Non-interactive mode)
