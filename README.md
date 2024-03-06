@@ -21,7 +21,6 @@ To start the command interpreter, follow these steps:
 - Clone the project repository to your local machine.
  ```bash
 git clone git@github.com:Mahari9/AirBnB_clone.git
-cd AirBnB_clone
 ```
 - Navigate to the directory containing the project files.
   ```bash
@@ -30,7 +29,7 @@ cd AirBnB_clone
 - Run the console.py file with: "./console.py" or "python console.py"
 - And finallyType "help" in the console for documentation.
 
-Interactive Mode
+### Interactive Mode
 ```bash
 $ ./console.py
 (hbnb) help
