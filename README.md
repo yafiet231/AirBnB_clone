@@ -18,7 +18,7 @@ Command interpreter is a shell like with limited to a specific use-case. In this
 
 ### How to Start the Command Interpreter
 To start the command interpreter, follow these steps:
-- Clone the project repository to your local machine and Navigate to the directory.
+- Clone the project repository to your local machine and Navigate to the directory that contain the file.
  ```bash
 git clone git@github.com:Mahari9/AirBnB_clone.git
 cd AirBnB_clone
