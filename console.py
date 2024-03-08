@@ -35,9 +35,9 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
-    # aliasing the command
+    # Make alias for quit command
     do_exit = do_quit
-    
+
     def emptyline(self):
         """Nothing do, just pass upon receiving an empty line."""
         pass
@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
                     if '"' in arg_w_quotes and '"' in arg_w_quotes[::-1]:
                         argu = arg_w_quotes[1:-1]
 
-                    # assign id 
+                    # assign id
                     id_arg = argu
                     arg = f"{class_name} {id_arg}"
 
@@ -106,7 +106,9 @@ class HBNBCommand(cmd.Cmd):
             print("Unknown command:", line)
 
     def do_create(self, name):
-        """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id"""
+        """Creates a new instance of BaseModel, saves it (to the JSON file)
+        and prints the id
+        """
         if not name:
             print("** class name missing **")
             return
@@ -114,12 +116,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-       instance = eval(name)()
-       instance.save()
+        instance = eval(name)()
+        instance.save()
         print(instance.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id"""
+        """Prints the string representation of an instance based on
+        the class name and id
+        """
         args = arg.split()
         if not args:
             print("** class name missing **")
@@ -140,7 +144,9 @@ class HBNBCommand(cmd.Cmd):
         print(objs_dict[key])
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id (save the change into the JSON file)"""
+        """Deletes an instance based on the class name and id
+        (save the change into the JSON file)
+        """
         args = arg.split()
 
         if not args:
@@ -164,9 +170,9 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
     def do_all(self, arg):
-"""Prints all string representation of all instances
-based or not on the class name
-"""
+        """Prints all string representation of all instances
+        based or not on the class name
+        """
 
         args = arg.split()
         objs_dict = storage.all()
@@ -180,7 +186,9 @@ based or not on the class name
         print(instances)
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id"""
+        """Updates an instance based on the
+        class name and id
+        """
         args = arg.split()
         if not args:
             print("** class name missing **")
