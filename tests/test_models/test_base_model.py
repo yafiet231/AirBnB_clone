@@ -33,7 +33,7 @@ class TestBaseModel_save(unittest.TestCase):
             pass
 
     def test_a_save(self):
-        bm = BaseModel()
+        p = BaseModel()
         sleep(0.05)
         first_updated_at = p.updated_at
         p.save()

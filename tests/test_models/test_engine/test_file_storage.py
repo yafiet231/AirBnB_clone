@@ -1,185 +1,175 @@
 #!/usr/bin/python3
-"""Defines unittests for models/engine/file_storage.py.
-
-Unittest classes:
-    TestFileStorage_instantiation
-    TestFileStorage_methods
+"""This module defines unittest for the storagefile engine
 """
-import unittest
-from models.engine.file_storage import FileStorage
-from models.engine.file_storage import classes
-from models.base_model import BaseModel
-from models.user import User
 import os
 import json
+import models
+import unittest
+from datetime import datetime
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+from models.user import User
+from models.state import State
+from models.place import Place
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
-class TestFileStorage(unittest.TestCase):
-    """test case for the fileStorage class."""
+class TestFileStorage_instantiation(unittest.TestCase):
+    """Defines Unittests, test cases for instantiation of the FileStorage class."""
 
+    def test_FileStorage_instantiation_no_args(self):
+        # Checks storage creation without argument.
+        self.assertEqual(type(FileStorage()), FileStorage)
+
+    def test_FileStorage_instantiation_wa_arg(self):
+        # Checks storage creation with argument.
+        with self.assertRaises(TypeError):
+            FileStorage(None)
+
+    def test_FileStorage_file_path_is_private_str(self):
+        # Checks the storage file path private attribute string.
+        self.assertEqual(str, type(FileStorage._FileStorage__file_path))
+
+    def testFileStorage_objs_is_private_dict(self):
+        # checks the storage type for dictionary.
+        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+
+    def test_storage_initializes(self):
+        # Checks for initialition of file storage.
+        self.assertEqual(type(models.storage), FileStorage)
+
+
+class TestFileStorage_methods(unittest.TestCase):
+    """Defines Unittests, test cases for the methods of the FileStorage class."""
+
+    @classmethod
     def setUp(self):
-        """prepare the FileStorage instance for each test."""
-        self.storage = FileStorage()
-        self.tearDown()
-        self.classes = ["BaseModel", "User", "Place", "State",
-                        "City", "Amenity", "Review"]
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
 
+    @classmethod
     def tearDown(self):
-        """Restore fileStorage data."""
         try:
             os.remove("file.json")
         except IOError:
             pass
-        self.storage._FileStorage__objects.clear()
-        if os.path.isfile(self.storage._FileStorage__file_path):
-            os.remove(self.storage._FileStorage__file_path)
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
 
-    def test__init__(self):
-        """Tests the __init__ """
+    def test_all(self):
+        # Test for all filestorage type for dictionary. 
+        self.assertEqual(dict, type(models.storage.all()))
 
-        with self.assertRaises(TypeError) as e:
-            FileStorage.__init__()
-        msg = "descriptor '__init__' of 'object' object needs an argument"
-        self.assertEqual(str(e.exception), msg)
-
-
-        with self.assertRaises(TypeError) as e:
-            b = FileStorage(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-        msg = "FileStorage() takes no arguments"
-        self.assertEqual(str(e.exception), msg)
-
-    def test_instanstiation(self):
-        """tests instance creation and errors"""
-        self.assertEqual(type(self.storage).__name__, "FileStorage")
+    def test_all_w_arg(self):
+        # Test for all filestorage type with arg for dictionary.
+        with self.assertRaises(TypeError):
+            models.storage.all(None)
 
     def test_new(self):
-        """tests adding new objects to the storage."""
-        for classname in self.classes:
-            cls = classes[classname]
-            o = cls()
-            self.storage.new(o)
-            key = "{}.{}".format(type(o).__name__, o.id)
-            self.assertTrue(key in FileStorage._FileStorage__objects)
-            self.assertEqual(FileStorage._FileStorage__objects[key], o)
+        # Tests for creation of new classes.
+        parent = BaseModel()
+        user = User()
+        state = State()
+        place = Place()
+        city = City()
+        amenity = Amenity()
+        review = Review()
+        models.storage.new(parent)
+        models.storage.new(user)
+        models.storage.new(state)
+        models.storage.new(place)
+        models.storage.new(city)
+        models.storage.new(amenity)
+        models.storage.new(review)
+        self.assertIn("BaseModel." + parent.id, models.storage.all().keys())
+        self.assertIn(parent, models.storage.all().values())
+        self.assertIn("User." + user.id, models.storage.all().keys())
+        self.assertIn(user, models.storage.all().values())
+        self.assertIn("State." + state.id, models.storage.all().keys())
+        self.assertIn(state, models.storage.all().values())
+        self.assertIn("Place." + place.id, models.storage.all().keys())
+        self.assertIn(place, models.storage.all().values())
+        self.assertIn("City." + city.id, models.storage.all().keys())
+        self.assertIn(city, models.storage.all().values())
+        self.assertIn("Amenity." + amenity.id, models.storage.all().keys())
+        self.assertIn(amenity, models.storage.all().values())
+        self.assertIn("Review." + review.id, models.storage.all().keys())
+        self.assertIn(review, models.storage.all().values())
 
-
-        self.tearDown()
-        with self.assertRaises(TypeError) as e:
-            self.storage.new()
-        msg = "new() missing 1 required positional argument: 'obj'"
-        self.assertEqual(str(e.exception), msg)
-
-
-        self.tearDown()
-        base_model = BaseModel()
-        with self.assertRaises(TypeError) as e:
-            self.storage.new(base_model, 98)
-        msg = "new() takes 2 positional arguments but 3 were given"
-        self.assertEqual(str(e.exception), msg)
- 
-    def test_all(self):
-        """tests all() the operations."""
-        for classname in self.classes:
-            self.tearDown()
-            self.assertEqual(self.storage.all(), {})
-            o = classes[classname]()
-            self.storage.new(o)
-            key = "{}.{}".format(type(o).__name__, o.id)
-            self.assertTrue(key in self.storage.all())
-            self.assertEqual(self.storage.all()[key], o)
-
-        with self.assertRaises(TypeError) as e:
-            FileStorage.all()
-        msg = "all() missing 1 required positional argument: 'self'"
-        self.assertEqual(str(e.exception), msg)
-
-        with self.assertRaises(TypeError) as e:
-            FileStorage.all(self, 0)
-        msg = "all() takes 1 positional argument but 2 were given"
-        self.assertEqual(str(e.exception), msg)
+    def test_new_w_args(self):
+        # Checks for new with arg.
+        with self.assertRaises(TypeError):
+            models.storage.new(BaseModel(), 1)
 
     def test_save(self):
-        """Tests save() operaions."""
-        for classname in self.classes:
-            self.tearDown()
-            cls = classes[classname]
-            o = cls()
-            self.storage.new(o)
-            key = "{}.{}".format(type(o).__name__, o.id)
-            self.storage.save()
-            self.assertTrue(os.path.isfile
-                            (self.storage._FileStorage__file_path))
-            d = {key: o.to_dict()}
-            with open(self.storage._FileStorage__file_path,
-                      "r", encoding="utf-8") as f:
-                self.assertEqual(len(f.read()), len(json.dumps(d)))
-                f.seek(0)
-                self.assertEqual(json.load(f), d)
+        parent = BaseModel()
+        user = User()
+        state = State()
+        place = Place()
+        city = City()
+        amenity = Amenity()
+        review = Review()
+        models.storage.new(parent)
+        models.storage.new(user)
+        models.storage.new(state)
+        models.storage.new(place)
+        models.storage.new(city)
+        models.storage.new(amenity)
+        models.storage.new(review)
+        models.storage.save()
+        save_text = ""
+        with open("file.json", "r") as f:
+            save_text = f.read()
+            self.assertIn("BaseModel." + parent.id, save_text)
+            self.assertIn("User." + user.id, save_text)
+            self.assertIn("State." + state.id, save_text)
+            self.assertIn("Place." + place.id, save_text)
+            self.assertIn("City." + city.id, save_text)
+            self.assertIn("Amenity." + amenity.id, save_text)
+            self.assertIn("Review." + review.id, save_text)
 
-        with self.assertRaises(TypeError) as e:
-            FileStorage.save()
-        msg = "save() missing 1 required positional argument: 'self'"
-        self.assertEqual(str(e.exception), msg)
-
-        with self.assertRaises(TypeError) as e:
-            FileStorage.save(self, 98)
-        msg = "save() takes 1 positional argument but 2 were given"
-        self.assertEqual(str(e.exception), msg)
+    def test_save_w_arg(self):
+        # checks for save with arg.
+        with self.assertRaises(TypeError):
+            models.storage.save(None)
 
     def test_reload(self):
-        """Tests reload() method."""
-        for classname in self.classes:
-            self.tearDown()
-            self.storage.reload()
-            self.assertEqual(self.storage._FileStorage__objects, {})
-            cls = classes[classname]
-            o = cls()
-            self.storage.new(o)
-            key = "{}.{}".format(type(o).__name__, o.id)
-            self.storage.save()
-            self.storage.reload()
-            self.assertEqual(o.to_dict(), self.storage.all()[key].to_dict())
+        parent = BaseModel()
+        user = User()
+        state = State()
+        place = Place()
+        city = City()
+        amenity = Amenity()
+        review = Review()
+        models.storage.new(parent)
+        models.storage.new(user)
+        models.storage.new(state)
+        models.storage.new(place)
+        models.storage.new(city)
+        models.storage.new(amenity)
+        models.storage.new(review)
+        models.storage.save()
+        models.storage.reload()
+        objs = FileStorage._FileStorage__objects
+        self.assertIn("BaseModel." + parent.id, objs)
+        self.assertIn("User." + user.id, objs)
+        self.assertIn("State." + state.id, objs)
+        self.assertIn("Place." + place.id, objs)
+        self.assertIn("City." + city.id, objs)
+        self.assertIn("Amenity." + amenity.id, objs)
+        self.assertIn("Review." + review.id, objs)
+
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
 
 
-            self.tearDown()
-            self.storage.reload()
-            self.assertEqual(FileStorage._FileStorage__objects, {})
-            cls = classes[classname]
-            o = cls()
-            self.storage.new(o)
-            key = "{}.{}".format(type(o).__name__, o.id)
-            self.storage.save()
-            o.name = "Anything"
-            self.storage.reload()
-            self.assertNotEqual(o.to_dict(), self.storage.all()[key].to_dict())
-
-
-        self.tearDown()
-        with self.assertRaises(TypeError) as e:
-            FileStorage.reload()
-        msg = "reload() missing 1 required positional argument: 'self'"
-        self.assertEqual(str(e.exception), msg)
-
-
-        self.tearDown()
-        with self.assertRaises(TypeError) as e:
-            FileStorage.reload(self, 0)
-        msg = "reload() takes 1 positional argument but 2 were given"
-        self.assertEqual(str(e.exception), msg)
-
-    def test_save_reload(self):
-        """Test saving and reloading objects from file."""
-        obj1 = BaseModel()
-        obj2 = User()
-        self.storage.new(obj1)
-        self.storage.new(obj2)
-        self.storage.save()
-        new_storage = FileStorage()
-        new_storage.reload()
-        all_objs = new_storage.all()
-        self.assertIn('BaseModel.{}'.format(obj1.id), all_objs)
-        self.assertIn('User.{}'.format(obj2.id), all_objs)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

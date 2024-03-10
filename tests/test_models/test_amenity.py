@@ -11,7 +11,7 @@ import models
 import unittest
 from datetime import datetime
 from time import sleep
-from models.Amenity import Amenity
+from models.amenity import Amenity
 
 
 class TestAmenity_instantiation(unittest.TestCase):
