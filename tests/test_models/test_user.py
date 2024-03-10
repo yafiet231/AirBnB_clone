@@ -122,15 +122,15 @@ class TestUser_instantiation(unittest.TestCase):
     def test_str_representation(self):
         # Checks for string representation
         dt = datetime.today()
-        dt_rep = rep(dt)
+        dt_rep = repr(dt)
         u = User()
         u.id = "123456"
         u.created_at = u.updated_at = dt
         ustr = u.__str__()
         self.assertIn("[User] (123456)", ustr)
         self.assertIn("'id': '123456'", ustr)
-        self.assertIn("'created_at': " + dt_rep, usstr)
-        self.assertIn("'updated_at': " + dt_rep, usstr)
+        self.assertIn("'created_at': " + dt_rep, ustr)
+        self.assertIn("'updated_at': " + dt_rep, ustr)
 
     def test_args_unused(self):
         # Checks for unused args
@@ -152,16 +152,17 @@ class TestUser_instantiation(unittest.TestCase):
             User(id=None, created_at=None, updated_at=None)
 
 
-
 class TestUser_to_dict(unittest.TestCase):
-    """Defines the Unittests test cases for to_dict method of the User class."""
+    """Defines the Unittests test cases for to_dict method
+    of the User class.
+    """
 
     def test_to_dict_type(self):
         # Checks the type of to_dict
         self.assertTrue(dict, type(User().to_dict()))
 
     def test_to_dict_holds_correct_keys(self):
-        # Checks the to_dict contains valid values 
+        # Checks the to_dict contains valid values
         u = User()
         self.assertIn("id", u.to_dict())
         self.assertIn("created_at", u.to_dict())
@@ -186,8 +187,8 @@ class TestUser_to_dict(unittest.TestCase):
 
     def test_to_dict_result(self):
         dt = datetime.today()
-        us = User()
-        us.id = "123456"
+        u = User()
+        u.id = "123456"
         u.created_at = u.updated_at = dt
         tdict = {
             'id': '123456',

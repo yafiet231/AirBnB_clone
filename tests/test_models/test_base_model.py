@@ -111,7 +111,7 @@ class TestBaseModel_instantiation(unittest.TestCase):
     def test_str_representation(self):
         # Checks for string representations of instances
         dt = datetime.today()
-        dt_rep = rep(dt)
+        dt_rep = repr(dt)
         p = BaseModel()
         p.id = "123456"
         p.created_at = p.updated_at = dt
