@@ -17,7 +17,9 @@ from models.review import Review
 
 
 class TestFileStorage_instantiation(unittest.TestCase):
-    """Defines Unittests, test cases for instantiation of the FileStorage class."""
+    """Defines Unittests, test cases for instantiation
+    of the FileStorage class.
+    """
 
     def test_FileStorage_instantiation_no_args(self):
         # Checks storage creation without argument.
@@ -42,7 +44,9 @@ class TestFileStorage_instantiation(unittest.TestCase):
 
 
 class TestFileStorage_methods(unittest.TestCase):
-    """Defines Unittests, test cases for the methods of the FileStorage class."""
+    """Defines Unittests, test cases for the methods
+    of the FileStorage class.
+    """
 
     @classmethod
     def setUp(self):
@@ -64,7 +68,7 @@ class TestFileStorage_methods(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
 
     def test_all(self):
-        # Test for all filestorage type for dictionary. 
+        # Test for all filestorage type for dictionary.
         self.assertEqual(dict, type(models.storage.all()))
 
     def test_all_w_arg(self):

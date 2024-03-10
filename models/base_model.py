@@ -17,7 +17,7 @@ class BaseModel:
         Initializes to create an instance for the BaseModel class.
         """
         tformat = "%Y-%m-%dT%H:%M:%S.%f"
-        if len(kwargs) !=0 :
+        if len(kwargs) != 0:
             if "__class__" in kwargs:
                 del kwargs["__class__"]
             kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
